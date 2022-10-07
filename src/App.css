@@ -1,7 +1,3 @@
-.App {
-  text-align: center;
-}
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -35,4 +31,56 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.main{
+  width: 75%;
+  max-width: 600px;
+  margin: 100px auto;
+  padding: 40px;
+  background: #ffffff;
+  display: block;
+  border-radius: 12px;
+  box-shadow: 3px 3px 10px 0 rgb(0 0 0 / 20%);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: #f1f1f1;
+  color: #444;
+}
+
+.header{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
+.username{
+  font-size: 17px;
+  font-weight: bold;
+  color: #0F1D33;
+  cursor: pointer;
+}
+
+
+.post_body{
+  padding: 7px 0 15px 10px;
+  margin-left: 5px;
+  display: block;
+}
+
+.post{
+  padding: 10px 15px 5px 15px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0;
+  border-top: 1px solid #CCCCCC;
+}
+
+.loader {
+  text-align: center;
 }

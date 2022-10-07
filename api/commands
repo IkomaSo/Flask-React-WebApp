@@ -1,0 +1,32 @@
+[react側のコンテナのビルド]
+docker image build -t task2 .
+
+[API(Flask)側のコンテナのビルド（./apiで実行）]
+docker image build -t task2_api:latest .
+
+[データベース用コンテナのビルド]
+docker run --name mysql -d \
+    -e MYSQL_RANDOM_ROOT_PASSWORD=yes \
+    -e MYSQL_DATABASE=task2_api -e MYSQL_USER=task2_api \
+    -e MYSQL_PASSWORD=hifzu8-zyxkob-jiQxyr \
+    mysql/mysql-server:latest
+
+[検索機能用のコンテナのビルド]
+docker run --name elasticsearch -d -p 9200:9200 -p 9300:9300 --rm \
+    -e "discovery.type=single-node" \
+    docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
+
+[コンテナ同士のネットワーク設定]
+docker network create task2-network
+docker network connect --alias dbserver task2-network mysql
+docker network connect task2-network elasticsearch
+
+[API(Flask)側のコンテナの起動]
+docker run --name task2_api -p 5000:5000 --rm -e SECRET_KEY=Hiphot-mobbys-modza7 \
+    --network task2-network \
+    -e DATABASE_URL=mysql+pymysql://task2_api:hifzu8-zyxkob-jiQxyr@dbserver/task2_api \
+    -e ELASTICSEARCH_URL=http://elasticsearch:9200 \
+    task2_api:latest
+
+[react側のコンテナの起動]
+docker run --name task2 -p 3000:3000 --network task2-network task2:latest
